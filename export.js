@@ -40,56 +40,59 @@ $(document).ready(function () {
         });
     }
 
+    // function exportTableToCSVCompatible($table, filename) {
+
+    //     var $rows = $table.find('tr:has(td)'),
+
+    //         // psuedo delimiters to avoid string splitting
+    //         tmpColDelim = String.fromCharCode(11), // vertical tab character
+    //         tmpRowDelim = String.fromCharCode(0), // null character
+
+    //         // chosen delimiters
+    //         colDelim = '","',
+    //         rowDelim = '"\r\n"',
+
+    //         // Get table contents
+    //         csv = '"' + $rows.map(function (i, row) {
+    //             var $row = $(row),
+    //                 $cols = $row.find('td');
+
+    //             return $cols.map(function (j, col) {
+    //                 var $col = $(col),
+    //                     text = $col.text();
+
+    //                 return text.replace(/"/g, '""'); // escape double quotes
+
+    //             }).get().join(tmpColDelim);
+
+    //         }).get().join(tmpRowDelim)
+    //             .split(tmpRowDelim).join(rowDelim)
+    //             .split(tmpColDelim).join(colDelim) + '"',
+
+    //         // Data URI
+    //         csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+    //         $.ajax({
+    //             url:'export.php',
+    //             data:{csv: csv},
+    //             type: 'POST'})
+    //             .done(function() {
+    //                 location.reload();
+    //             })
+    //             .fail(function() {
+    //                 alert("Unable to export the data. Please try again.");
+    //             });
+    //         });
+
+    //     /*$(this)
+    //         .attr({
+    //         'download': filename,
+    //             'href': csvData,
+    //             'target': '_blank'
+    //     }); */
+    // }
     function exportTableToCSVCompatible($table, filename) {
 
-        var $rows = $table.find('tr:has(td)'),
-
-            // psuedo delimiters to avoid string splitting
-            tmpColDelim = String.fromCharCode(11), // vertical tab character
-            tmpRowDelim = String.fromCharCode(0), // null character
-
-            // chosen delimiters
-            colDelim = '","',
-            rowDelim = '"\r\n"',
-
-            // Get table contents
-            csv = '"' + $rows.map(function (i, row) {
-                var $row = $(row),
-                    $cols = $row.find('td');
-
-                return $cols.map(function (j, col) {
-                    var $col = $(col),
-                        text = $col.text();
-
-                    return text.replace(/"/g, '""'); // escape double quotes
-
-                }).get().join(tmpColDelim);
-
-            }).get().join(tmpRowDelim)
-                .split(tmpRowDelim).join(rowDelim)
-                .split(tmpColDelim).join(colDelim) + '"',
-
-            // Data URI
-            csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
-
-            $.ajax({
-                url:'export.php',
-                data:{csv: csv},
-                type: 'POST'})
-                .done(function() {
-                    location.reload();
-                })
-                .fail(function() {
-                    alert("Unable to export the data. Please try again.");
-                });
-            });
-
-        /*$(this)
-            .attr({
-            'download': filename,
-                'href': csvData,
-                'target': '_blank'
-        }); */
     }
     // Duck typing for IE which calls alternative method if necessary
     $(".export_button").on('click', function (event) {
@@ -98,7 +101,7 @@ $(document).ready(function () {
         if(isIE == true) {
             exportTableToCSVCompatible.apply(this, [$(this).next('.exportable'), 'export.csv']); 
         } else {
-            exportTableToCSV.apply(this, [$(this).next('.exportable'), 'export.csv']); 
+            exportTableToCSV.apply(this, [$(this).next('.exportable'), 'export.csv']);
         }
     });
 });
